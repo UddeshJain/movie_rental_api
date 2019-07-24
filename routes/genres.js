@@ -39,15 +39,23 @@ router.post('/', async (req, res) => {
 })
 
 router.put('/:id', async (req, res) => {
-    // const { error } = validateGenre(req.body)
-    // if (error) {
-    //     res.status(400).send(error.details[0].message)
-    // }
-    const genre = await Genre.findByIdAndUpdate(req.params.id, { name: req.body.name }, { new: true })
-    if (!genre) {
-        return res.status(400).send('The genre with the give ID is not found')
+    const { error } = validateGenre(req.body)
+    if (error) {
+        return res.status(400).send(error.details[0].message)
     }
-    res.send(genre)
+    if (mongoose.Types.ObjectId.isValid(req.params.id)) {
+        const genre = await Genre.findByIdAndUpdate(req.params.id, { name: req.body.name }, { new: true })
+        return res.send(genre)
+    }
+    res.status(400).send('The genre with the give ID is not found')
+})
+
+router.delete('/:id', async (req, res) => {
+    if (mongoose.Types.ObjectId.isValid(req.params.id)) {
+        const genre = await Genre.findByIdAndDelete(req.params.id)
+        return res.send(genre)
+    }
+    res.status(400).send('The genre with the give ID is not found')
 })
 
 module.exports = router
