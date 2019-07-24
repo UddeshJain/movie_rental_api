@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const genres = require('./routes/genres')
+const customers = require('./routes/customers')
 const app = express()
 
 mongoose.connect('mongodb+srv://UddeshRW:uddesh@cluster0-2erky.mongodb.net/Uddesh', { useNewUrlParser: true })
@@ -9,6 +10,7 @@ mongoose.connect('mongodb+srv://UddeshRW:uddesh@cluster0-2erky.mongodb.net/Uddes
 
 app.use(express.json())
 app.use('/api/genres', genres)
+app.use('/api/customers', customers)
 
 const port = process.env.port || 3000;
 app.listen(port, () => console.log(`Listining on port: ${port}`))
