@@ -6,10 +6,9 @@ const router = express.Router()
 router.get('/', async (req, res) => {
     const genres = await Genre.find()
     if (genres) {
-        res.send(genres)
-    } else {
-        res.status(400) .send('Record not found.')  
+        return res.send(genres)
     }
+    res.status(400) .send('Record not found.')  
 })
 
 router.post('/', async (req, res) => {

@@ -37,3 +37,6 @@ function validateMovie(movie) {
     }
     return Joi.validate(movie, schema)
 }
+
+exports.Movie = Movie
+exports.validate = validateMovie
