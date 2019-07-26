@@ -27,3 +27,23 @@ router.post('/', async (req, res) => {
     movies = await movies.save()
     res.send(movies)
 })
+
+router.put('/:id', async (req, res) => {
+    const { error } = validate(req.body)
+    if (error) return res.status(400).send(error.details[0].message)
+    const genre = Genre.findById(req.body.genreId)
+    if (!genre) return res.status(400).send('Invalid genre id')
+    if (mongoose.Types.ObjectId.isValid(req.params.id)) {
+        const movie = Movie.findByIdAndUpdate(req.params.id, {
+            title: req.body.title,
+            genre: {
+                _id: genre._id,
+                name: genre.name
+            },
+            numberInStock: req.body.numberInStock,
+            dailyRentalRate: req.body.dailyRentalRate
+        }, { new: true })
+        return res.send(movie)
+    }
+    res.status(400).send('Movie with given id is not found.')
+})
