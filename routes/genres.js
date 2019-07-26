@@ -30,7 +30,7 @@ router.put('/:id', async (req, res) => {
         const genre = await Genre.findByIdAndUpdate(req.params.id, { name: req.body.name }, { new: true })
         return res.send(genre)
     }
-    res.status(400).send('The genre with the give ID is not found')
+    res.status(400).send('The genre with the given ID is not found')
 })
 
 router.delete('/:id', async (req, res) => {
@@ -38,7 +38,7 @@ router.delete('/:id', async (req, res) => {
         const genre = await Genre.findByIdAndDelete(req.params.id)
         return res.send(genre)
     }
-    res.status(400).send('The genre with the give ID is not found')
+    res.status(400).send('The genre with the given ID is not found')
 })
 
 module.exports = router
