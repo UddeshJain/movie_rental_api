@@ -47,3 +47,11 @@ router.put('/:id', async (req, res) => {
     }
     res.status(400).send('Movie with given id is not found.')
 })
+
+router.delete('/:id', async (req, res) => {
+    if (mongoose.Types.ObjectId.isValid(id)) {
+        const movie = Movie.findByIdAndDelete(req.params.id)
+        return res.send(movie)
+    }
+    res.status(400).send('Invalid ID')
+})
