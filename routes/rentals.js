@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const express = require('express')
 const Fawn = require('fawn')
+const auth = require('../middleware/auth')
 const { Rental, validate } = require('../models/rental')
 const { Customer } = require('../models/customer')
 const { Movie } = require('../models/movie')
@@ -14,7 +15,7 @@ router.get('/', async (req, res) => {
     res.send(rentals)
 })
 
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
     const { error } = validate(req.body)
     if (error) return res.status(400).send(error.details[0].message)
     if (!mongoose.Types.ObjectId.isValid(req.body.customerId) || !mongoose.Types.ObjectId.isValid(req. body.movieId)) {

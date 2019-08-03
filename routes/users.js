@@ -1,8 +1,6 @@
 const _ = require('lodash')
 const express = require('express')
 const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
-const config = require('config')
 const { User, validate } = require('../models/user')
 const router = express.Router()
 

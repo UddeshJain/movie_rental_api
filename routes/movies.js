@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const { Movie, validate } = require('../models/movie')
+const auth = require('../middleware/auth')
 const express = require('express')
 const { Genre } = require('../models/genre')
 const router = express.Router()
@@ -10,7 +11,7 @@ router.get('/', async (req, res) => {
     res.send(movies)
 })
 
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
     const { error } = validate(req.body)
     if (error) return res.status(400).send(error.details[0].message)
     const genre = await Genre.findById(req.body.genreId)
@@ -28,7 +29,7 @@ router.post('/', async (req, res) => {
     res.send(movies)
 })
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', auth, async (req, res) => {
     const { error } = validate(req.body)
     if (error) return res.status(400).send(error.details[0].message)
     const genre = await Genre.findById(req.body.genreId)
@@ -48,7 +49,7 @@ router.put('/:id', async (req, res) => {
     res.status(400).send('Movie with given id is not found.')
 })
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', auth, async (req, res) => {
     if (mongoose.Types.ObjectId.isValid(req.params.id)) {
         const movie = await Movie.findByIdAndDelete(req.params.id)
         return res.send(movie)
