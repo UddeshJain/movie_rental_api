@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const auth = require('../middleware/auth')
+const admin = require('../middleware/admin')
 const { Genre, validate} = require('../models/genre')
 const router = express.Router()
 
@@ -34,7 +35,7 @@ router.put('/:id', auth, async (req, res) => {
     res.status(400).send('The genre with the given ID is not found')
 })
 
-router.delete('/:id', auth, async (req, res) => {
+router.delete('/:id', [auth, admin], async (req, res) => {
     if (mongoose.Types.ObjectId.isValid(req.params.id)) {
         const genre = await Genre.findByIdAndDelete(req.params.id)
         return res.send(genre)
