@@ -22,6 +22,11 @@ mongoose
   .catch((err) => console.log('Error.....', err));
 
 app.use(express.json());
+app.get('/', (req, res) => {
+  res.send(
+    'Hi welcome to Movie Rental Api. Please read the documentation to use this API'
+  );
+});
 app.use('/api/genres', genres);
 app.use('/api/customers', customers);
 app.use('/api/movies', movies);

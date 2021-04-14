@@ -1,3 +1,5 @@
+Hey there 👋, Movie Rental Api is live [here](https://video-rental-api1.herokuapp.com/).
+
 # How to run locally
 
 1. Clone the repository
